@@ -1,11 +1,11 @@
-# Use the official OpenJDK image
+# First stage: Build the application
+FROM gradle:7.6-jdk17 AS build
+WORKDIR /temp
+COPY . .
+RUN gradle build --no-daemon
+
+# Second stage: Run the application
 FROM openjdk:17-jdk-slim
-
-# Expose the application port
 EXPOSE 8080
-
-# Copy the application JAR file into the container
-COPY /build/libs/temp.jar app.jar
-
-# Set the entry point for the container
+COPY --from=build /temp/build/libs/temp.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
