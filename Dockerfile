@@ -7,5 +7,5 @@ RUN gradle build --no-daemon
 # Second stage: Run the application
 FROM openjdk:17-jdk-slim
 EXPOSE 8080
-COPY --from=build /temp/build/libs/temp.jar app.jar
+COPY --from=build /temp/build/libs/temp-1.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
